@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.hencoder.hencoderpracticedraw6.R;
+import com.hencoder.hencoderpracticedraw6.Utils;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static com.hencoder.hencoderpracticedraw6.Utils.dpToPixel;
@@ -21,6 +22,7 @@ import static com.hencoder.hencoderpracticedraw6.Utils.dpToPixel;
 public class Practice01Translation extends RelativeLayout {
     Button animateBt;
     ImageView imageView;
+    int currentState = 0;
 
     public Practice01Translation(Context context) {
         super(context);
@@ -49,6 +51,31 @@ public class Practice01Translation extends RelativeLayout {
             @Override
             public void onClick(final View v) {
                 // TODO 在这里处理点击事件，通过 View.animate().translationX/Y/Z() 来让 View 平移
+                switch (currentState) {
+                    case 0:
+                        imageView.animate().translationXBy(Utils.dpToPixel(100)).setDuration(500);
+                        break;
+                    case 1:
+                        imageView.animate().translationX(0).setDuration(500);
+                        break;
+                    case 2:
+                        imageView.animate().translationYBy(Utils.dpToPixel(60)).setDuration(500);
+                        break;
+                    case 3:
+                        imageView.animate().translationY(0).setDuration(500);
+                        break;
+                    case 4:
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            imageView.animate().translationZBy(Utils.dpToPixel(20));
+                        }
+                        break;
+                    case 5:
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                            imageView.animate().translationZ(0);
+                        }
+                        break;
+                }
+                currentState = currentState + 1 > 5 ? 0 : currentState + 1;
             }
         });
     }
